@@ -1,8 +1,0 @@
-/*
-  This file just imports all the css files that are used
-  by the web served version
-*/
-@import url(bootstrap/bootstrap.css);
-@import url(bootstrap/bootstrap_responsive.css);
-@import url(viewer_manifest.css);
-@import url(library.css);

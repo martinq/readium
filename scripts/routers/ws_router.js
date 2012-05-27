@@ -1,1 +1,0 @@
-// This is the router used by the web served version of readium
