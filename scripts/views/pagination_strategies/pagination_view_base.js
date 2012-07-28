@@ -36,6 +36,7 @@ Readium.Views.PaginationViewBase = Backbone.View.extend({
 		this.applyBindings( $(e.srcElement).contents() );
 		this.applySwitches( $(e.srcElement).contents() );
 		this.addSwipeHandlers( $(e.srcElement).contents() );
+        this.injectHighlightStyles(e.srcElement);
         this.injectMathJax(e.srcElement);
         this.injectLinkHandler(e.srcElement);
         var trigs = this.parseTriggers(e.srcElement.contentDocument);
@@ -233,6 +234,20 @@ Readium.Views.PaginationViewBase = Backbone.View.extend({
 		html(content).append("<div id='content-end'></div>");
 	},
 
+	// inject styles into iframe
+    injectHighlightStyles: function (iframe) {
+    	var doc, head, style;
+		doc = iframe.contentDocument;
+		head = doc.getElementsByTagName("head")[0];
+		
+		if(head) {
+		    style = doc.createElement("style");
+			style.type = "text/css";
+			style.innerText = ".ttsSentHL { background-color: #DDDDDD; z-index: -2; }\n.ttsWordHL { background-color: #99CCFF; z-index: -1;}";
+			head.appendChild(style);
+		}
+    },
+    
 	// inject mathML parsing code into an iframe
     injectMathJax: function (iframe) {
     	var doc, script, head;

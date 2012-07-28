@@ -42,7 +42,8 @@ Readium.Views.ToolbarView = Backbone.View.extend({
 		"click #fs-toggle-btn": "toggle_fs",
 		"click #toggle-toc-btn": "toggle_toc",
 		"click #nightmode-btn": "toggle_night_mode",
-		"click #play-mo-btn": "play_mo"
+		"click #play-mo-btn": "play_mo",
+		"click #play-tts-btn": "play_tts"
 	},
 
 	show_toolbar: function(e) {
@@ -84,5 +85,13 @@ Readium.Views.ToolbarView = Backbone.View.extend({
 		else {
 			this.model.paginator.v.mediaOverlayController.playMo();
 		}
-	}
+	},
+	
+	play_tts: function() {
+		if(this.model.ttsPlayer.get("tts_playing")) {
+			this.model.ttsPlayer.pause();
+		} else {
+			this.model.ttsPlayer.play();
+		}
+	},
 });

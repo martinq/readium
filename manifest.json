@@ -22,6 +22,7 @@
    "permissions": [ 
 	  "contextMenus",
       "tabs",
+      "tts",
       "http://*/"
 	],
    "content_scripts": [

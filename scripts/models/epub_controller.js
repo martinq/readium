@@ -55,6 +55,10 @@ Readium.Models.EPUBController = Backbone.Model.extend({
 				that.set("has_toc", ( !!that.packageDocument.getTocItem() ) );
 			}
 		});
+		
+		if (window.hasOwnProperty('BeneSpeak')) {
+			this.ttsPlayer = new Readium.Models.TTSPlayer({controller: this});
+		}
 
 		// `change:spine_position` is triggered whenver the reader turns pages
 		// accross a `spine_item` boundary. We need to cache thier new position
