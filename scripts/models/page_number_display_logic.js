@@ -13,7 +13,8 @@ Readium.Models.PageNumberDisplayLogic = Backbone.Model.extend({
 
 	initialize: function () {},
 
-	// REFACTORING CANDIDATE: This might be better named as getPageNumsToDisplay; the "goto" is confusing
+	// REFACTORING CANDIDATE: This might be better named as getPageNumsToDisplay; the "goto" is confusing; also some
+	//   deep nesting here that could be refactored for clarity.
     // Description: This method determines the page numbers to display, given a single page number to "go to"
     // Arguments (
     //   gotoPageNumber (integer): The page number to "go to"

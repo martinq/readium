@@ -10,6 +10,9 @@ html {
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
+.offscreenText {
+  display: none; }
+
 .clearfix {
   *zoom: 1; }
   .clearfix:before, .clearfix:after {
@@ -2308,19 +2311,24 @@ a.label:hover, a.badge:hover {
 .invisible {
   visibility: hidden; }
 
+#toolbar-el {
+  height: 52px; }
+
 .navbar .nav > li > a {
   padding: 5px 0; }
 .navbar li {
-  margin: 0;
+  margin: 3px;
   padding: 0; }
 .navbar .brand {
-  padding: 5px;
+  padding: 8px;
   margin-left: 10px; }
 .navbar .divider-vertical {
-  height: 46px; }
+  height: 52px;
+  background-color: black;
+  border-right: 1px solid #3D3D3D; }
 .navbar .divider-vertical.stubby {
   margin-top: 8px;
-  height: 30px; }
+  height: 35px; }
 .navbar .nav-icon {
   height: 36px;
   width: 36px; }
@@ -2329,8 +2337,12 @@ a.label:hover, a.badge:hover {
   height: 36px; }
 
 #show-toolbar-button {
-  padding: 5px;
-  margin-right: 12px; }
+  padding: 8px;
+  margin-right: 7px;
+  display: none; }
+
+#add-book-li {
+  margin-right: 22px; }
 
 /* A css clearfix for holding floated elements in a container */
 .clearfix:after {
@@ -2383,7 +2395,7 @@ body {
   overflow-y: scroll; }
 
 .library-container {
-  padding-top: 45px; }
+  padding-top: 52px; }
 
 .green {
   color: #6FA64D; }

@@ -2,9 +2,9 @@
 
 Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
 
-	// ------------------------------------------------------------------------------------ //
+	/* ------------------------------------------------------------------------------------ */
 	//  "PUBLIC" METHODS (THE API)                                                          //
-	// ------------------------------------------------------------------------------------ //
+	/* ------------------------------------------------------------------------------------ */
 
 	initialize: function() {
 
@@ -100,7 +100,7 @@ Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
 		var moHelper = new Readium.Models.MediaOverlayViewHelper({epubController : this.model});
 
 		moHelper.renderFixedLayoutMoFragHighlight(
-			this.pages.get("current_pages"),
+			this.pages.get("current_page"),
 			this.mediaOverlayController.get("current_mo_frag"),
 			this);
 	}, 
@@ -213,4 +213,28 @@ Readium.Views.FixedPageView = Backbone.View.extend({
 	iframe: function() {
 		return this.$('.content-sandbox')[0];
 	}
+});
+
+
+Readium.Views.ImagePageView = Backbone.View.extend({
+
+	className: "fixed-page-wrap",
+
+	initialize: function() {
+		this.template = Handlebars.templates.image_page_template;
+		this.model.on("change", this.render, this);
+	},
+
+	render: function() {
+		
+		debugger;
+
+		var json = this.model.toJSON();
+		this.$el.html( this.template( json ) );
+		this.$el.addClass( this.model.getPageSpreadClass() );
+		
+
+		return this;
+	}
+
 });

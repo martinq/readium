@@ -47,20 +47,16 @@ Readium.Models.MediaOverlayViewHelper = Backbone.Model.extend({
     renderFixedLayoutMoFragHighlight: function(currentPages, currentMOFrag, fixedLayoutView) {
         var that = this;
 
-        // REFACTORING CANDIDATE: Not sure what the this.toString() is doing? Is it intended that that is an index. 
-        //  unsure why the toString() is required. 
-		// get rid of the last highlight
-		$.each(currentPages, function(idx) {
-           var body = fixedLayoutView.getPageBody(this.toString());
+        $.each(currentPages, function(idx) {
+           var body = fixedLayoutView.getPageBody(this);
            that.removeActiveClass(body);
         }); 
         
 		if(currentMOFrag) {
     		$.each(currentPages, function(idx) {
-                var body = fixedLayoutView.getPageBody(this.toString());
+                var body = fixedLayoutView.getPageBody(this);
                 var newFrag = $(body).find("#" + currentMOFrag);
                 if (newFrag) {
-
                 	that.addActiveClass(newFrag);	
                 } 
            });
@@ -72,7 +68,6 @@ Readium.Models.MediaOverlayViewHelper = Backbone.Model.extend({
 	renderReflowableMoFragHighlight: function(currentTheme, reflowableView, currentMOFrag) {
 
 		if (currentTheme === "default") {
-
 			currentTheme = "default-theme";
 		}
 

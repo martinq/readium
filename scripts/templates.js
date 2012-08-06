@@ -4,8 +4,8 @@ templates['binding_template'] = template(function (Handlebars,depth0,helpers,par
   helpers = helpers || Handlebars.helpers;
   var foundHelper, self=this;
 
-  return "<iframe scrolling=\"no\" \n		frameborder=\"0\" \n		marginwidth=\"0\" \n		marginheight=\"0\" \n		width=\"100%\" \n		height=\"100%\" \n		class='binding-sandbox'>\n</iframe>";});
 
+  return "<iframe scrolling=\"no\" \n		frameborder=\"0\" \n		marginwidth=\"0\" \n		marginheight=\"0\" \n		width=\"100%\" \n		height=\"100%\" \n		class='binding-sandbox'>\n</iframe>";});
 templates['extracting_item_template'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, foundHelper, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;
@@ -16,7 +16,7 @@ templates['extracting_item_template'] = template(function (Handlebars,depth0,hel
   stack1 = foundHelper || depth0.log_message;
   if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
   else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "log_message", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "</h5>\n<div role=\"status\" aria-live=\"assertive\" aria-relevant=\"all\" class=\"progress progress-striped progress-success active \">	\n		<div class=\"bar\" style=\"width: ";
+  buffer += escapeExpression(stack1) + "</h5>\n<div class=\"progress progress-striped progress-success active \">	\n		<div role=\"status\" aria-live=\"assertive\" aria-relevant=\"all\" class=\"bar\" style=\"width: ";
   foundHelper = helpers.progress;
   stack1 = foundHelper || depth0.progress;
   if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
@@ -44,6 +44,18 @@ templates['fixed_page_template'] = template(function (Handlebars,depth0,helpers,
   if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
   else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "uri", { hash: {} }); }
   buffer += escapeExpression(stack1) + "\"\n			class='content-sandbox'>\n	</iframe>\n</div>";
+  return buffer;});
+templates['image_page_template'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  var buffer = "", stack1, foundHelper, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;
+
+
+  buffer += "<div class=\"fixed-page-margin\">\n	<img src=\"";
+  foundHelper = helpers.uri;
+  stack1 = foundHelper || depth0.uri;
+  if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
+  else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "uri", { hash: {} }); }
+  buffer += escapeExpression(stack1) + "\" >\n</div>";
   return buffer;});
 templates['library_item_template'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
@@ -207,7 +219,7 @@ templates['library_items_template'] = template(function (Handlebars,depth0,helpe
   var foundHelper, self=this;
 
 
-  return "<div id='empty-message'>\n	<p id='empty-message-text' class='green'>\n		Add items to your</br>library here!\n	</p>\n	<img id='empty-arrow' src='/images/library/empty_library_arrow.png' />\n</div>";});
+  return "<div id='empty-message'>\n	<p id='empty-message-text' class='green'>\n		Add items to your</br>library here!\n	</p>\n	<img id='empty-arrow' src='/images/library/empty_library_arrow.png' alt='' />\n</div>";});
 templates['ncx_nav_template'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, foundHelper, self=this, functionType="function", helperMissing=helpers.helperMissing, undef=void 0, escapeExpression=this.escapeExpression;

@@ -53,10 +53,15 @@
         node = smilModel.findNodeByAttrValue("text", "src", "test.xhtml#frag");
         return expect(node.getAttribute("id")).toEqual("testtext1");
       });
-      return it("finds the first node with the given attribute having any value", function() {
+      it("finds the first node containing an 'src' attribute", function() {
         var node;
         node = smilModel.findNodeByAttrValue("*", "src", "");
         return expect(node.getAttribute("id")).toEqual("mo1_par1_text");
+      });
+      return it("finds the first node containing an 'epub:textref' attribute", function() {
+        var node;
+        node = smilModel.findNodeByAttrValue("*", "epub:textref", "");
+        return expect(node.getAttribute("id")).toEqual("testseq1");
       });
     });
     return describe("clock value parsing", function() {

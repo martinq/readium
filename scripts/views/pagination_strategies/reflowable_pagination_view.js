@@ -114,13 +114,11 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 		$(this.getBody()).css(this.offset_dir, "-" + offset);
 		this.showContent();
 
-		// REFACTORING CANDIDATE: This can probably be removed as the implementation of findVisiblePageElements
-		//   has changed so that method no longer sets an attribute on another model but rather returns the 
-		//   visible elements. 
 		console.log("going to page " + page);
         if (this.model.get("two_up") == false || 
             (this.model.get("two_up") && page % 2 === 1)) {
-            this.findVisiblePageElements(); // find visible page elements after refreshing the display
+                // when we change the page, we should tell MO to update its position
+                this.mediaOverlayController.pageChanged();
         }
 	},
 

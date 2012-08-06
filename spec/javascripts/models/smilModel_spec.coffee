@@ -41,9 +41,14 @@ describe "Readium.Models.SmilModel", ->
             node = smilModel.findNodeByAttrValue("text", "src", "test.xhtml#frag")
             expect(node.getAttribute("id")).toEqual "testtext1"
         
-        it "finds the first node with the given attribute having any value", ->
+        it "finds the first node containing an 'src' attribute", ->
             node = smilModel.findNodeByAttrValue("*", "src", "");
             expect(node.getAttribute("id")).toEqual "mo1_par1_text"
+        
+        it "finds the first node containing an 'epub:textref' attribute", ->
+            node = smilModel.findNodeByAttrValue("*", "epub:textref", "");
+            expect(node.getAttribute("id")).toEqual "testseq1"
+        
     
     describe "clock value parsing", ->
         it "parses h:mm:ss.fraction", ->

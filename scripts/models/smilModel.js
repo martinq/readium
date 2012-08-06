@@ -124,22 +124,24 @@ Readium.Models.SmilModel = function() {
     this.findNodeByAttrValue = function(nodename, attr, val) {
         if (root == null) return null;
         var res = null;
-        
-        if (attr == "src" || attr == "epub:textref") {
+        var attr_ = attr;
+        if (attr_ == "src" || attr_ == "epub:textref") {
+            if (attr_ == "epub:textref") attr_ = "epub\\:textref"; // normalize for jquery
+            
             // treat src and textref attrs differently
-            // TODO can get a better comparison with something like http://medialize.github.com/URI.js/
+            // TODO can get better filepath comparison with something like http://medialize.github.com/URI.js/
             // for now, just look at the text file names
-            var doc_href = val.substr(val.lastIndexOf("/")+1); // TODO hack!
-            var selector = nodename + "[" + attr + "]";
+            var doc_href = val.substr(val.lastIndexOf("/")+1); 
+            var selector = nodename + "[" + attr_ + "]";
             var potentialMatches = $(root).find(selector);
             if (val == "") {
                 res = potentialMatches[0];
             }
             else {
                 potentialMatches.each(function(idx) {
-                    var src = $(this).attr(attr);
+                    var src = $(this).attr(attr_);
                     if (src != undefined) {
-                        // TODO fix this hack, same as above
+                        // TODO use a proper URI library to get more accurate filepath comparison (same as above)
                         src = src.substr(src.lastIndexOf("/")+1);
                         if (src === doc_href) {
                             res = this;
@@ -151,8 +153,8 @@ Readium.Models.SmilModel = function() {
         }
         else {
             var selector = nodename;
-            if (attr != "") {
-                selector += "[" + attr;
+            if (attr_ != "") {
+                selector += "[" + attr_;
                 if (val != "") {
                     selector += "='" + val + "'";
                 }

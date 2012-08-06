@@ -1228,19 +1228,27 @@ html {
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
+.offscreenText {
+  display: none; }
+
+#toolbar-el {
+  height: 52px; }
+
 .navbar .nav > li > a {
   padding: 5px 0; }
 .navbar li {
-  margin: 0;
+  margin: 3px;
   padding: 0; }
 .navbar .brand {
-  padding: 5px;
+  padding: 8px;
   margin-left: 10px; }
 .navbar .divider-vertical {
-  height: 46px; }
+  height: 52px;
+  background-color: black;
+  border-right: 1px solid #3D3D3D; }
 .navbar .divider-vertical.stubby {
   margin-top: 8px;
-  height: 30px; }
+  height: 35px; }
 .navbar .nav-icon {
   height: 36px;
   width: 36px; }
@@ -1249,8 +1257,12 @@ html {
   height: 36px; }
 
 #show-toolbar-button {
-  padding: 5px;
-  margin-right: 12px; }
+  padding: 8px;
+  margin-right: 7px;
+  display: none; }
+
+#add-book-li {
+  margin-right: 22px; }
 
 #settings {
   position: fixed;
@@ -1325,9 +1337,8 @@ span.setting-button:hover {
 
 body {
   margin: 0;
-  padding: 0;
-  position: relative;
-  padding-top: 45; }
+  padding: 52px 0 0 0;
+  position: relative; }
 
 #next-page-button {
   right: 0;
@@ -1737,27 +1748,3 @@ body.apple-fixed-layout {
     color: #666; }
     .night-theme #readium-content-container.mo-playing .current-mo-content {
       color: white; }
-
-#regions-not-available {
-  padding: 10px;
-  color: #B94A48;
-  background-color: #F2DEDE;
-  border-color: #EED3D7;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 15px;
-  line-height: 18px;
-  font-weight: normal; }
-  #regions-not-available div {
-    margin: 10px; }
-  #regions-not-available strong {
-    font-weight: bold; }
-  #regions-not-available code {
-    color: #111111;
-    background-color: white;
-    border: 1px solid #B94A48;
-    padding: 2px 5px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px; }
-  #regions-not-available li {
-    margin: 10px 0px; }

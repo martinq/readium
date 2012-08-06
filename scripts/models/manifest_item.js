@@ -252,9 +252,17 @@ Readium.Models.SpineItem = Readium.Models.ManifestItem.extend({
 		return this.collection.isBookFixedLayout();
 	},
 
+	// REFACTORING CANDIDATE: caching the the fixed layout views. I do not remember the reason that
+	// we are doing this. Possible that it is not necessary...
 	getPageView: function() {
 		if(!this.view) {
-			this.view = new Readium.Views.FixedPageView({model: this});
+			if(this.isImage()) {
+				this.view = new Readium.Views.ImagePageView({model: this});
+			}
+			else {
+				this.view = new Readium.Views.FixedPageView({model: this});	
+			}
+			
 		}
 		return this.view;
 	},
