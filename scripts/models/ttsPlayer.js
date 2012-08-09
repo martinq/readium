@@ -1,6 +1,7 @@
 Readium.Models.TTSPlayer = Backbone.Model.extend({
     
     defaults: {
+        "always_speak": ['ol', 'ul', 'dl', 'table'],
         "tts_playing": false,
         "curentElement": null,
         "bufferSize": 5000,
@@ -53,48 +54,62 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
         var el = self.get('currentElement');
         var bodyEl = self.controller.paginator.v.getBody().ownerDocument.body;
         if (el == null) {
-            el = bodyEl;
+            el = bodyEl.children[0];
         }
         
         console.log("Starting from ...");
         self._logPath(el);
         do {
-            if (!self._hasTextContent(el) && el.children.length > 0) {
+            if (!self._shouldPlay(el) && el.children.length > 0) {
                 console.log("Found a child");
                 el = el.children[0];
             } else if (el.nextElementSibling != null) {
                 console.log("Found a sibling");
                 el = el.nextElementSibling;
             } else {
-                while (el.tagName.toLowerCase() != 'body') {
+                while (el.parentElement != null) {
                     console.log("Climbing up.")
                     el = el.parentElement;
+                    
                     if (el.nextElementSibling != null) {
                         console.log("... and forward")
                         el = el.nextElementSibling;
                         break;
                     }
-                }
-                if (el.tagName.toLowerCase() == 'body') {
-                    el = null;
+                    
+                    if (el.tagName.toLowerCase() == 'body') {
+                        console.log('Climbed out to body; terminate.');
+                        el = null;
+                        break;
+                    }                     
                 }
             }
             if (el == null) {
                 break;
             }
             self._logPath(el);
-        } while (! self._hasTextContent(el));
+        } while (! self._shouldPlay(el));
         
         self.set('currentElement', el);
     },
     
-    _hasTextContent: function(el) {
-        for (var i = 0; i < el.childNodes.length; i++) {
-            if (el.childNodes[i].nodeType == Node.TEXT_NODE && el.childNodes[i].textContent.trim().length > 0) {
-                return true;
-            }
+    _shouldPlay: function(el) {
+        if (this.get('always_speak').indexOf(el.tagName.toLowerCase()) != -1) {
+            console.log(el.tagName + ' must always be spoken');
+            return true;
+        } else if (el.textContent.trim().length == 0) {
+            console.log(el.tagName + ' is empty.');
+            return false;
+        } else if (el.textContent.trim().length < this.get('bufferSize')) {
+            console.log(el.tagName + ' content is smaller than buffer size');
+            return true;
+        } else if (el.children.length > 1) {
+            console.log(el.tagName + ' content is larger than buffer size and has more than one child');
+            return false;
+        } else {
+            console.log(el.tagName + ' content is larger than buffer size but cannot be broken down further');
+            return true;
         }
-        return false;
     },
     
     _logPath: function(el) {
