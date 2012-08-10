@@ -40,7 +40,7 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
                     {
                         'rate' : 1.25,
                         'desiredEventTypes' : ['word'],
-                        'onEvent' : function(event) { data.handleTtsEvent(event, function() {self.speakNextElement();});}
+                        'onEvent' : self._createCallbackHandler(self, data),
                     });
             } else {
                 self.pause();
@@ -110,6 +110,32 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
             console.log(el.tagName + ' content is larger than buffer size but cannot be broken down further');
             return true;
         }
+    },
+    
+    _createCallbackHandler: function(self, data) {
+        return function(event) {
+            
+            if (event.type == 'word') {
+                
+                data.xOffset = 0 - data._getOffset(data.document.documentElement.style.left);
+                data.yOffset = 0 - data._getOffset(data.document.documentElement.style.top);
+                
+                var wordIndex = data.wordAt(event.charIndex);
+                if (wordIndex >= 0) {
+                    data.highlightWord(wordIndex);
+                }
+                
+                var sentenceIndex = data.sentenceAt(event.charIndex);
+                if (sentenceIndex >= 0) {
+                    data.highlightSentence(sentenceIndex);
+                }
+                
+            } else if (event.type == 'interrupted' || event.type == 'end') {
+                data.clearWordHighlight();
+                data.clearSentenceHighlight();
+                self.speakNextElement();
+            }
+        };        
     },
     
     _logPath: function(el) {
