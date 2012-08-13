@@ -329,7 +329,11 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 		}
 		// less the amount we already shifted to get to cp
 		shift -= parseInt(this.getBody().style[this.offset_dir], 10); 
-		return Math.ceil( shift / (this.page_width + this.gap_width) );
+		var pg = Math.ceil( shift / (this.page_width + this.gap_width) );
+		if (shift % (this.page_width + this.gap_width) == 0) {
+		    pg++;
+		}
+		return pg;
 	},
 
 	// REFACTORING CANDIDATE: This might be part of the public interface
