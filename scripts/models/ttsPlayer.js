@@ -13,7 +13,7 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
 		this.controller.on("change:spine_position", this.stop, this);
 		this.controller.on("repagination_event", this._windowSizeChangeHandler, this);
 		
-        window.onunload = function() { chrome.tts.stop(); };
+        $(window).unload( function() { chrome.tts.stop(); });
     },
     
     play: function() {
