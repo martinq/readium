@@ -10,6 +10,10 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
     initialize: function() {
         this.controller = this.get('controller');
         this.bufferSize = this.get('bufferSize');
+		this.controller.on("change:spine_position", this.stop, this);
+		this.controller.on("repagination_event", this._windowSizeChangeHandler, this);
+		
+        window.onunload = function() { chrome.tts.stop(); };
     },
     
     play: function() {
@@ -24,8 +28,17 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
     },
     
     pause: function() {
+        console.log("Pausing TTS.");
+        this.set('tts_playing', false);
+        self.data = null;
+        chrome.tts.stop();
+    },
+    
+    stop: function() {
         console.log("Stopping TTS.");
         this.set('tts_playing', false);
+        this.set('currentElement', null);
+        self.data = null;
         chrome.tts.stop();
     },
     
@@ -35,12 +48,12 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
             self.seekToNextElement();
             var el = self.get('currentElement');
             if (el != null) {
-                var data = BeneSpeak.generateSpeechData(el);
-                chrome.tts.speak(data.utterance,
+                self.data = BeneSpeak.generateSpeechData(el);
+                chrome.tts.speak(self.data.utterance,
                     {
                         'rate' : 1.25,
                         'desiredEventTypes' : ['word'],
-                        'onEvent' : self._createCallbackHandler(self, data),
+                        'onEvent' : self._createCallbackHandler(self),
                     });
             } else {
                 self.pause();
@@ -112,17 +125,19 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
         }
     },
     
-    _createCallbackHandler: function(self, data) {
+    _createCallbackHandler: function(self) {
+        var data = self.data;
         return function(event) {
             
             if (event.type == 'word') {
                 
-                data.xOffset = 0 - data._getOffset(data.document.documentElement.style.left);
-                data.yOffset = 0 - data._getOffset(data.document.documentElement.style.top);
+                data.xOffset = data._getOffset(data.document.documentElement.style.left);
+                data.yOffset = data._getOffset(data.document.documentElement.style.top);
                 
                 var wordIndex = data.wordAt(event.charIndex);
                 if (wordIndex >= 0) {
                     data.highlightWord(wordIndex);
+                    self._updatePagePosition(data);
                 }
                 
                 var sentenceIndex = data.sentenceAt(event.charIndex);
@@ -136,6 +151,26 @@ Readium.Models.TTSPlayer = Backbone.Model.extend({
                 self.speakNextElement();
             }
         };        
+    },
+    
+    _updatePagePosition: function(data) {
+        var v = this.controller.paginator.v;
+        if (v.getElemPageNumber != null) {
+            if (data._wordRects.length > 0) {
+                var pageNum = v.getElemPageNumber(data._wordRects[0]);
+                if (!v.pages.isPageVisible(pageNum)) {
+                    v.pages.goToPage(pageNum);
+                }
+            }
+        }
+    },
+    
+    _windowSizeChangeHandler: function() {
+        if (this.get('tts_playing')) {
+            var tmp = this.data._highlightedSentence;
+            this.data.clearSentenceHighlight();
+            this.data.highlightSentence(tmp);
+        }
     },
     
     _logPath: function(el) {
