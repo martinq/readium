@@ -4,9 +4,9 @@ Readium.Views.ScrollingPaginationView = Readium.Views.PaginationViewBase.extend(
 	//  "PUBLIC" METHODS (THE API)                                                          //
 	// ------------------------------------------------------------------------------------ //
 
-	initialize: function() {
+	initialize: function(options) {
 		// call the super ctor
-		Readium.Views.PaginationViewBase.prototype.initialize.call(this);
+		Readium.Views.PaginationViewBase.prototype.initialize.call(this, options);
 		this.page_template = Handlebars.templates.scrolling_page_template;
 	},
 

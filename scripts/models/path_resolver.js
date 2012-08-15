@@ -87,6 +87,16 @@ var fixXhtmlLinks = function(content, resolver) {
 		$obj.attr('xlink:href', path);
 	});
 	//correctionHelper('xlink:href');
+	var head = dom.getElementsByTagName("head")[0];
+	if(head) {
+		var head_content = head.innerHTML;
+		head_content = "<script type='text/javascript' src='" + 
+						window.location.origin + 
+						"/scripts/epub_reading_system.js' ></script>" + 
+						head_content;
+		head.innerHTML = head_content;
+		debugger;
+	}
 	return domToString(dom);
 	
 };

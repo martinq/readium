@@ -39,6 +39,7 @@ src_files:
   - scripts/models/pagination_strategy_selector.js
   - scripts/models/readium_pagination.js
   - scripts/models/page_number_display_logic.js
+  - scripts/epub_reading_system.js
 
 # stylesheets
 #

@@ -37,7 +37,7 @@ Readium.Models.PackageDocumentParser.JathTemplate = {
         media_overlay: "@media-overlay"
 	} ],
 						 
-	spine: [ "//def:itemref", { idref: "@idref", properties: "@properties" } ],
+	spine: [ "//def:itemref", { idref: "@idref", properties: "@properties", linear: "@linear" } ],
 
 	bindings: ["//def:bindings/def:mediaType", { 
 		handler: "@handler",
@@ -156,13 +156,22 @@ Readium.Models.PackageDocumentParser.prototype.parseSpineProperties = function(s
 		return properties;
 		
 	}
+
+	spine = this.removeNonLinearSpineItems(spine);
+
 	for(var i = 0; i < spine.length; i++) {
-		
 		var props = parseProperiesString(spine[i].properties);
 		// add all the properties to the spine item
 		_.extend(spine[i], props);
 	}
 	return spine;
+};
+
+// remove any non-linear items as per [the spec](http://idpf.org/epub/30/spec/epub30-publications.html#sec-itemref-elem)
+Readium.Models.PackageDocumentParser.prototype.parseSpineProperties = function(spine) {
+	return _.reject(spine, function(x) {
+		x.linear === "no";
+	})
 };
 
 // resolve the url of smils on any manifest items that have a MO

@@ -134,7 +134,7 @@ templates['library_item_template'] = template(function (Handlebars,depth0,helper
   stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.cover_href);
   if(typeof stack1 === functionType) { stack1 = stack1.call(depth0, { hash: {} }); }
   else if(stack1=== undef) { stack1 = helperMissing.call(depth0, "data.cover_href", { hash: {} }); }
-  buffer += escapeExpression(stack1) + "' width='150' height='220' alt='ePUB cover'>\n		<div class=\"caption clearfix modal-buttons\">\n</div>\n	</div>\n	<div class='caption modal-book-info'>\n		<h3 class='green modal-title'>";
+  buffer += escapeExpression(stack1) + "' width='150' height='220' alt='ePUB cover'>\n		<div class=\"caption clearfix modal-buttons\">\n			<a href=\"#\" class=\"btn read\" data-book='<%= data.key %>' role='button'>Read</a>\n			<a class=\"btn btn-danger delete pull-right\" role='button'>Delete</a>\n		</div>\n	</div>\n	<div class='caption modal-book-info'>\n		<h3 class='green modal-title'>";
   foundHelper = helpers.data;
   stack1 = foundHelper || depth0.data;
   stack1 = (stack1 === null || stack1 === undefined || stack1 === false ? stack1 : stack1.title);

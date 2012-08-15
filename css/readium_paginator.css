@@ -1,21 +1,21 @@
 /*
 Syntax error: Undefined variable: "$readium_image_path".
-        on line 9 of css/sass/readium_paginator.scss
+        on line 13 of css/sass/readium_paginator.scss
 
-4: 	position: relative;
-5: }
-6: 
-7: #next-page-button {
-8: 	right: 0;
-9: 	background-image: url($readium_image_path + 'paginator/next_page.png');
-10: }
-11: 
-12: #prev-page-button {
-13: 	left: 0;
-14: 	background-image: url($readium_image_path + 'paginator/previous_page.png');
+8: 	width: 100%;
+9: }
+10: 
+11: #next-page-button {
+12: 	right: 0;
+13: 	background-image: url($readium_image_path + 'paginator/next_page.png');
+14: }
+15: 
+16: #prev-page-button {
+17: 	left: 0;
+18: 	background-image: url($readium_image_path + 'paginator/previous_page.png');
 
 Backtrace:
-css/sass/readium_paginator.scss:9
+css/sass/readium_paginator.scss:13
 /Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/script/variable.rb:49:in `_perform'
 /Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/script/node.rb:40:in `perform'
 /Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/script/operation.rb:74:in `_perform'
@@ -66,4 +66,4 @@ css/sass/readium_paginator.scss:9
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined variable: \"$readium_image_path\".\A         on line 9 of css/sass/readium_paginator.scss\A \A 4: 	position: relative;\A 5: }\A 6: \A 7: #next-page-button {\A 8: 	right: 0;\A 9: 	background-image: url($readium_image_path + 'paginator/next_page.png');\A 10: }\A 11: \A 12: #prev-page-button {\A 13: 	left: 0;\A 14: 	background-image: url($readium_image_path + 'paginator/previous_page.png');"; }
+  content: "Syntax error: Undefined variable: \"$readium_image_path\".\A         on line 13 of css/sass/readium_paginator.scss\A \A 8: 	width: 100%;\A 9: }\A 10: \A 11: #next-page-button {\A 12: 	right: 0;\A 13: 	background-image: url($readium_image_path + 'paginator/next_page.png');\A 14: }\A 15: \A 16: #prev-page-button {\A 17: 	left: 0;\A 18: 	background-image: url($readium_image_path + 'paginator/previous_page.png');"; }

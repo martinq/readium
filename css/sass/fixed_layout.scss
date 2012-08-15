@@ -1,11 +1,9 @@
 /*.apple-fixed-layout*/
 
-.apple-fixed-layout #readium-right-content {
-	height: 90%;
-}
-
 #readium-right-content {
 	height: 100%;
+	width: 100%;
+	
 }
 
 .invisible {
@@ -56,12 +54,8 @@
 
 }
 
-body.apple-fixed-layout {
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
-}
+
 
 .apple-fixed-layout #readium-book-view-el {
-	margin: auto;
+	//margin: auto;
 }

@@ -5,9 +5,9 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 	//  "PUBLIC" METHODS (THE API)                                                          //
 	// ------------------------------------------------------------------------------------ //
 
-	initialize: function() {
+	initialize: function(options) {
 		// call the super ctor
-		Readium.Views.PaginationViewBase.prototype.initialize.call(this);
+		Readium.Views.PaginationViewBase.prototype.initialize.call(this, options);
 		this.page_template = Handlebars.templates.reflowing_template;
 
 		// make sure we have proper vendor prefixed props for when we need them

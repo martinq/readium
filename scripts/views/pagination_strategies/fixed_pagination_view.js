@@ -6,10 +6,10 @@ Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
 	//  "PUBLIC" METHODS (THE API)                                                          //
 	/* ------------------------------------------------------------------------------------ */
 
-	initialize: function() {
+	initialize: function(options) {
 
 		// call the super ctor
-		Readium.Views.PaginationViewBase.prototype.initialize.call(this);
+		Readium.Views.PaginationViewBase.prototype.initialize.call(this, options);
 
 		var spinePos = this.model.get("spine_position");
 		this.model.on("FXL_goToPage", this.spinePositionChangeHandler, this);
@@ -51,7 +51,7 @@ Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
 
 		setTimeout(function() {
 			that.setContainerSize();
-		}, 5);
+		}, 15);
 
 		this.showCurrentPages();
 
@@ -134,13 +134,14 @@ Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
 
 			this.$el.width(meta.width * 2);
 			this.$el.height(meta.height);
+			this.zoomer.fitToBest();
 
 			if (!this.zoomed) {
 
 				this.zoomed = true;
-				setTimeout(function() {
-					$('#page-wrap').zoomAndScale(); //<= this was a little buggy last I checked but it is a super cool feature
-				}, 1)	
+				// setTimeout(function() {
+				// 	$('#page-wrap').zoomAndScale(); //<= this was a little buggy last I checked but it is a super cool feature
+				// }, 1)	
 			}
 		}
 	},	
@@ -226,15 +227,26 @@ Readium.Views.ImagePageView = Backbone.View.extend({
 	},
 
 	render: function() {
-		
-		debugger;
-
+		var that = this;
 		var json = this.model.toJSON();
 		this.$el.html( this.template( json ) );
 		this.$el.addClass( this.model.getPageSpreadClass() );
+
+		this.$('img').on("load", function() { that.setSize(); });
 		
 
 		return this;
+	},
+
+	setSize: function() {
+		var $img = this.$('img');
+		var width = $img.width();
+		var height = $img.height();
+		// temp this is a mess but it will do for now...
+		if( width > 0) {
+			this.model.set({meta_width: width, meta_height: height})
+		}
+		
 	}
 
 });

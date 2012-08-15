@@ -14,7 +14,7 @@ Readium.Views.PaginationViewBase = Backbone.View.extend({
 	/* ------------------------------------------------------------------------------------ */
 
 	initialize: function(options) {
-		
+		this.zoomer = options.zoomer;
 		this.pages = new Readium.Models.ReadiumPagination({model : this.model});
 		this.mediaOverlayController = new Readium.Models.MediaOverlayController({
 			epubController : this.model,
@@ -227,13 +227,6 @@ Readium.Views.PaginationViewBase = Backbone.View.extend({
 		});
 	},
 
-	replaceContent: function(content) {
-		// TODO: put this where it belongs
-		this.$('#readium-content-container').
-		css('visibility', 'hidden').
-		html(content).append("<div id='content-end'></div>");
-	},
-
 	// inject styles into iframe
     injectHighlightStyles: function (iframe) {
     	var doc, head, style;
@@ -275,8 +268,8 @@ Readium.Views.PaginationViewBase = Backbone.View.extend({
     	$("#readium-book-view-el").attr("style", "");
 		this.$el.toggleClass("two-up", false);
 		this.$('#spine-divider').toggle(false);
+		this.zoomer.reset();
 
-    	this.replaceContent("");
     	$('#page-wrap').css({
     		"position": "relative",
     		"right": "0px", 

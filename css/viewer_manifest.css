@@ -1337,8 +1337,12 @@ span.setting-button:hover {
 
 body {
   margin: 0;
-  padding: 52px 0 0 0;
-  position: relative; }
+  padding: 0;
+  position: absolute;
+  top: 52px;
+  bottom: 0px;
+  overflow: hidden;
+  width: 100%; }
 
 #next-page-button {
   right: 0;
@@ -1420,11 +1424,9 @@ body {
   z-index: 10; }
 
 /*.apple-fixed-layout*/
-.apple-fixed-layout #readium-right-content {
-  height: 90%; }
-
 #readium-right-content {
-  height: 100%; }
+  height: 100%;
+  width: 100%; }
 
 .invisible {
   visibility: hidden;
@@ -1462,14 +1464,6 @@ body {
   left: 0%; }
 .two-up .fixed-page-wrap.center_page {
   z-index: 11; }
-
-body.apple-fixed-layout {
-  height: 100%;
-  width: 100%;
-  overflow: hidden; }
-
-.apple-fixed-layout #readium-book-view-el {
-  margin: auto; }
 
 #readium-info {
   text-align: center;
@@ -1655,7 +1649,6 @@ body.apple-fixed-layout {
   top: 0;
   z-index: 999;
   bottom: 0;
-  margin-top: 45px;
   border-left: 1px solid #DDD;
   font-size: 0.8em;
   overflow: hidden;

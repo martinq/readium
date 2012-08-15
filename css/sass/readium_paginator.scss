@@ -1,7 +1,11 @@
 body {
 	margin: 0; 
-	padding: 52px 0 0 0;
-	position: relative;
+	padding: 0;
+	position: absolute;
+	top: 52px;
+	bottom: 0px;
+	overflow: hidden;
+	width: 100%;
 }
 
 #next-page-button {

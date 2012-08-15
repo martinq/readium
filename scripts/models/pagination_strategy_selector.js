@@ -20,6 +20,7 @@ Readium.Models.PaginationStrategySelector = Backbone.Model.extend({
 	initialize: function() {
 
 		this.model = this.get("book");
+		this.zoomer = new Readium.Views.FixedLayoutBookZoomer();
 	},
 
 	// Description: Determine what the current spine item is and render it
@@ -39,17 +40,17 @@ Readium.Models.PaginationStrategySelector = Backbone.Model.extend({
 		var spineItem = book.getCurrentSection();
 		if (spineItem.isFixedLayout()) {
 
-			this.v = new Readium.Views.FixedPaginationView({model: book});
+			this.v = new Readium.Views.FixedPaginationView({model: book, zoomer: this.zoomer});
 		}
 		// A scrolling epub
 		else if (this.shouldScroll()) {
 
-				this.v = new Readium.Views.ScrollingPaginationView({model: book});
+				this.v = new Readium.Views.ScrollingPaginationView({model: book, zoomer: this.zoomer});
 		}
 		// A reflowable epub
 		else {
 
-			this.v = new Readium.Views.ReflowablePaginationView({model: book});
+			this.v = new Readium.Views.ReflowablePaginationView({model: book, zoomer: this.zoomer});
 		}
 
 		this.rendered_spine_positions = this.v.render(!!renderToLast);

@@ -1,65 +1,63 @@
 /*
 Syntax error: Undefined mixin 'box-shadow'.
-        on line 20 of css/sass/fixed_layout.scss, in `box-shadow'
-        from line 20 of css/sass/fixed_layout.scss
+        on line 18 of css/sass/fixed_layout.scss, in `box-shadow'
+        from line 18 of css/sass/fixed_layout.scss
 
-15: 
-16: .fixed-page-wrap {
-17: 	position: absolute;
-18: 	left: 25%;
-19: 	overflow: hidden; 
-20: 	@include box-shadow(0 0 5px 5px rgba(80,80,80,0.5));
-21: 	background-color: #FFF;
-22: }
-23: 
-24: .apple-fixed-layout #spine-divider {
-25: 	    position: absolute;
+13: 
+14: .fixed-page-wrap {
+15: 	position: absolute;
+16: 	left: 25%;
+17: 	overflow: hidden; 
+18: 	@include box-shadow(0 0 5px 5px rgba(80,80,80,0.5));
+19: 	background-color: #FFF;
+20: }
+21: 
+22: .apple-fixed-layout #spine-divider {
+23: 	    position: absolute;
 
 Backtrace:
-css/sass/fixed_layout.scss:20:in `box-shadow'
-css/sass/fixed_layout.scss:20
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:170:in `visit_mixin'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:18:in `visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:53:in `map'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:37:in `block in visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:238:in `visit_rule'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:18:in `visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:53:in `map'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:37:in `block in visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:47:in `visit_root'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/base.rb:37:in `visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:18:in `visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/visitors/perform.rb:7:in `visit'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/tree/root_node.rb:20:in `render'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/engine.rb:300:in `_render'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/engine.rb:247:in `render'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/plugin/compiler.rb:340:in `update_stylesheet'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/plugin/compiler.rb:202:in `block in update_stylesheets'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/plugin/compiler.rb:200:in `each'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/plugin/compiler.rb:200:in `update_stylesheets'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/plugin/compiler.rb:234:in `watch'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/plugin.rb:107:in `method_missing'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/exec.rb:431:in `watch_or_update'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/exec.rb:302:in `process_result'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/exec.rb:41:in `parse'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/lib/sass/exec.rb:21:in `parse!'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290@readium/gems/sass-3.1.19/bin/sass:8:in `<top (required)>'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290/bin/sass:19:in `load'
-/Users/matthew/.rvm/gems/ruby-1.9.2-p290/bin/sass:19:in `<main>'
+css/sass/fixed_layout.scss:18:in `box-shadow'
+css/sass/fixed_layout.scss:18
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:170:in `visit_mixin'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:53:in `map'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:238:in `visit_rule'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:53:in `map'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:47:in `visit_root'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/base.rb:37:in `visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/visitors/perform.rb:7:in `visit'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/tree/root_node.rb:20:in `render'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/engine.rb:300:in `_render'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/engine.rb:247:in `render'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/plugin/compiler.rb:340:in `update_stylesheet'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/plugin/compiler.rb:202:in `block in update_stylesheets'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/plugin/compiler.rb:200:in `each'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/plugin/compiler.rb:200:in `update_stylesheets'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/sass-3.1.20/lib/sass/plugin/compiler.rb:298:in `block in watch'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/listen-0.4.7/lib/listen/multi_listener.rb:86:in `call'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/listen-0.4.7/lib/listen/multi_listener.rb:86:in `on_change'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/listen-0.4.7/lib/listen/multi_listener.rb:95:in `block in initialize_adapter'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/listen-0.4.7/lib/listen/adapter.rb:162:in `call'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/listen-0.4.7/lib/listen/adapter.rb:162:in `poll_changed_dirs'
+/Users/matthewrobertson03/.rvm/gems/ruby-1.9.3-p194@readium/gems/listen-0.4.7/lib/listen/adapters/darwin.rb:28:in `block in start'
 */
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'box-shadow'.\A         on line 20 of css/sass/fixed_layout.scss, in `box-shadow'\A         from line 20 of css/sass/fixed_layout.scss\A \A 15: \A 16: .fixed-page-wrap {\A 17: 	position: absolute;\A 18: 	left: 25%;\A 19: 	overflow: hidden; \A 20: 	@include box-shadow(0 0 5px 5px rgba(80,80,80,0.5));\A 21: 	background-color: #FFF;\A 22: }\A 23: \A 24: .apple-fixed-layout #spine-divider {\A 25: 	    position: absolute;"; }
+  content: "Syntax error: Undefined mixin 'box-shadow'.\A         on line 18 of css/sass/fixed_layout.scss, in `box-shadow'\A         from line 18 of css/sass/fixed_layout.scss\A \A 13: \A 14: .fixed-page-wrap {\A 15: 	position: absolute;\A 16: 	left: 25%;\A 17: 	overflow: hidden; \A 18: 	@include box-shadow(0 0 5px 5px rgba(80,80,80,0.5));\A 19: 	background-color: #FFF;\A 20: }\A 21: \A 22: .apple-fixed-layout #spine-divider {\A 23: 	    position: absolute;"; }

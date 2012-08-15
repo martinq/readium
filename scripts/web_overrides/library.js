@@ -35,6 +35,7 @@ Readium.Views.LibraryItemView = Backbone.View.extend({
 	render: function() {
 		var renderedContent = this.template({data: this.model.toJSON()});
 		$(this.el).html(renderedContent);
+		this.$(".delete").toggle(false);
 		return this;
 	},
 

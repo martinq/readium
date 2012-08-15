@@ -24,7 +24,9 @@
 	<div class="pull-left modal-cover-wrap">
 		<img class='details-cover-image' src='{{ data.cover_href }}' width='150' height='220' alt='ePUB cover'>
 		<div class="caption clearfix modal-buttons">
-</div>
+			<a href="#" class="btn read" data-book='<%= data.key %>' role='button'>Read</a>
+			<a class="btn btn-danger delete pull-right" role='button'>Delete</a>
+		</div>
 	</div>
 	<div class='caption modal-book-info'>
 		<h3 class='green modal-title'>{{ data.title }}</h3>
