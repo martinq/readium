@@ -48,6 +48,13 @@ namespace :build do
 		`mv #{@config[:publish_dir]}.crx #{@config[:crx_path]}`
 	end
 
+	# TODO publishing to the chrome web store does not require a packed extension
+	# only a zip of its contents.
+	# desc "build extension" 
+	# task :crx do
+	# 	`zip readium.zip -r readium/*`
+	# end
+
 	desc "Minify and copy all scripts into publish dir"
 	task :scripts => "create_workspace" do
 		puts "compressing the individual scripts and moving into #{@config[:publish_dir]}"

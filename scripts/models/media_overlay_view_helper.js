@@ -41,8 +41,8 @@ Readium.Models.MediaOverlayViewHelper = Backbone.Model.extend({
         }
         return null;
     },
-
-	// we're not using themes for fixed layout, so just apply the active class name to the
+    
+    // we're not using themes for fixed layout, so just apply the active class name to the
     // current MO fragment, so that any authored styles will be applied.
     renderFixedLayoutMoFragHighlight: function(currentPages, currentMOFrag, fixedLayoutView) {
         var that = this;
@@ -63,8 +63,22 @@ Readium.Models.MediaOverlayViewHelper = Backbone.Model.extend({
 		}
 	},
 
-    // apply the active class to the current MO fragment and also
-    // apply the default theme colors to it
+	renderFixedMoPlaying: function(currentPages, MOIsPlaying, fixedLayoutView) {
+        var that = this;
+        // if we are using the author's style for highlighting, then just clear it if we are not playing
+        if (this.authorActiveClassExists()) {
+            if (!MOIsPlaying) {
+        		// get rid of the last highlight
+                $.each(currentPages, function(idx) {
+                   var body = fixedLayoutView.getPageBody(this);
+                   that.removeActiveClass(body);
+                }); 
+            }
+        }
+	},
+    
+
+    // highlight the text
 	renderReflowableMoFragHighlight: function(currentTheme, reflowableView, currentMOFrag) {
 
 		if (currentTheme === "default") {
@@ -74,16 +88,22 @@ Readium.Models.MediaOverlayViewHelper = Backbone.Model.extend({
 		// get rid of the last highlight
 		var body = reflowableView.getBody();
         var lastFrag = this.removeActiveClass(body);
-        if (lastFrag) {
-            $(lastFrag).css("color", "");
-        }
         
+        // if the author did not define an active class themselves
+        if (this.authorActiveClassExists() == false) {
+            if (lastFrag) {
+                $(lastFrag).css("color", "");
+            }
+        }
+                
 		if (currentMOFrag) {
             // add active class to the new MO fragment
             var newFrag = $(body).find("#" + currentMOFrag);
             if (newFrag) {
                 this.addActiveClass(newFrag);
-                $(newFrag).css("color", reflowableView.themes[currentTheme]["color"]);   
+                if (this.authorActiveClassExists() == false) {
+                    $(newFrag).css("color", reflowableView.themes[currentTheme]["color"]);   
+                }
             }
 		}
 	},	
@@ -91,25 +111,36 @@ Readium.Models.MediaOverlayViewHelper = Backbone.Model.extend({
 	// reflowable pagination uses default readium themes, which include a 'fade' effect on the inactive MO text
 	renderReflowableMoPlaying: function(currentTheme, MOIsPlaying, reflowableView) {
 		
-		if (currentTheme === "default") { 
-			currentTheme = "default-theme";
-		}
-
-		var body = reflowableView.getBody();
-        if (MOIsPlaying) {
-            // change the color of the body text so it looks inactive compared to the MO fragment that is playing
-			$(body).css("color", reflowableView.themes[currentTheme]["mo-color"]);
-		}
-		else {
-            // reset the color of the text to the theme default
-			$(body).css("color", reflowableView.themes[currentTheme]["color"]);	
-
-            // remove style info from the last MO fragment
-            var lastFrag = this.removeActiveClass(reflowableView.getBody());
-            if (lastFrag) {
-                $(lastFrag).css("color", "");
+        // if we are using the author's default style for highlighting, then just clear it if we are not playing
+        if (this.authorActiveClassExists()) {
+            if (!MOIsPlaying) {
+        		// get rid of the last highlight
+        		var body = reflowableView.getBody();
+                var lastFrag = this.removeActiveClass(body);
             }
-		}
+        }
+        else {
+    		if (currentTheme === "default") { 
+    			currentTheme = "default-theme";
+    		}
+        
+    		var body = reflowableView.getBody();
+            if (MOIsPlaying) {
+                // change the color of the body text so it looks inactive compared to the MO fragment that is playing
+    			$(body).css("color", reflowableView.themes[currentTheme]["mo-color"]);
+    		}
+    		else {
+                // reset the color of the text to the theme default
+    			$(body).css("color", reflowableView.themes[currentTheme]["color"]);	
+
+                // remove style info from the last MO fragment
+                var lastFrag = this.removeActiveClass(reflowableView.getBody());
+                if (lastFrag) {
+                    $(lastFrag).css("color", "");
+                }
+    		}
+        }
+		
 	},
 
 	// ------------------------------------------------------------------------------------ //
@@ -117,7 +148,17 @@ Readium.Models.MediaOverlayViewHelper = Backbone.Model.extend({
 	// ------------------------------------------------------------------------------------ //
 
     getActiveClass: function() {
-
-    	return this.epubController.packageDocument.get("metadata").active_class;
+        var activeClass = this.epubController.packageDocument.get("metadata").active_class;
+        if (activeClass == "") {
+            // we need an active class value to use, whether the author specified it or not
+            activeClass = "-readium-epub-media-overlay-active";
+        }
+        return activeClass;
+    },
+    
+    // did the author supply an active-class metdata value
+    authorActiveClassExists: function() {
+        var activeClass = this.epubController.packageDocument.get("metadata").active_class;
+        return activeClass == "" ? false : true;
     }
 });

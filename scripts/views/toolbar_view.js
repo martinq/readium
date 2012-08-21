@@ -6,6 +6,7 @@ Readium.Views.ToolbarView = Backbone.View.extend({
 		this.model.on("change:toolbar_visible", this.renderBarVibility, this);
 		this.model.on("change:full_screen", this.renderFullScreen, this);
 		this.model.on("change:current_theme", this.renderThemeButton, this);
+        this.model.on("change:spine_position", this.hideOrShowMoButton, this);
 	},
 
 	render: function() {
@@ -36,6 +37,15 @@ Readium.Views.ToolbarView = Backbone.View.extend({
 		return this;
 	},
 
+    hideOrShowMoButton: function() {
+        if (this.model.getCurrentSection().hasMediaOverlay()) {
+            $("#play-mo-btn").show();
+        }
+        else {
+            $("#play-mo-btn").hide();
+        }
+    },
+    
 	events: {
 		"click #hide-toolbar-button": "hide_toolbar",
 		"click #show-toolbar-button": "show_toolbar",
@@ -77,13 +87,13 @@ Readium.Views.ToolbarView = Backbone.View.extend({
 		this.model.save();
 	},
 
-	// REFACTORING CANDIDATE: A lot of indirection here! 
 	play_mo: function() {
-		if (this.model.paginator.v.mediaOverlayController.get("mo_playing")) {
-			this.model.paginator.v.mediaOverlayController.pauseMo();
+        var moController = this.model.get("media_overlay_controller");
+		if (moController.get("active_mo")) {
+			moController.pauseMo();
 		}
 		else {
-			this.model.paginator.v.mediaOverlayController.playMo();
+			moController.playMo();
 		}
 	},
 	

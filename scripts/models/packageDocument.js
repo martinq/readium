@@ -73,6 +73,50 @@ Readium.Models.PackageDocument = Backbone.Model.extend({
 		return this.get("res_spine").length;
 	},
 
+	// gets the next position in the spine for which the
+	// spineItem does not have `linear='false'`. The start
+	// param is the non-inclusive position to begin the search
+	// from. If start is not supplied, the search will begin at
+	// postion 0. If no linear position can be found, this 
+	// funciton returns -1
+	getNextLinearSpinePostition: function(start) {
+		var spine = this.get("res_spine");
+		if(start === undefined || start < -1) {
+			start = -1;
+		}
+
+		while(start < spine.length - 1) {
+			start += 1;
+			if(spine.at(start).get("linear") !== "no") {
+				return start;
+			}
+		}
+
+		return -1;
+	},
+
+	// gets the previous position in the spine for which the
+	// spineItem does not have `linear='false'`. The start
+	// param is the non-inclusive position to begin the search
+	// from. If start is not supplied, the search will begin at
+	// the end of the spine. If no linear position can be found, 
+	// this function returns -1
+	getPrevLinearSpinePostition: function(start) {
+		var spine = this.get("res_spine");
+		if(start === undefined || start > spine.length) {
+			start = spine.length;
+		}
+
+		while(start > 0) {
+			start -= 1;
+			if(spine.at(start).get("linear") !== "no") {
+				return start;
+			}
+		}
+
+		return -1;
+	},
+
 	goToNextSection: function() {
 		var cp = this.get("spine_position");
 		this.set({spine_position: (cp + 1) });

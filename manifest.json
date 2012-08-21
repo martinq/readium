@@ -1,5 +1,6 @@
 {
   "manifest_version": 2,
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
    "app": {
       "launch": {
          "local_path": "views/library.html"
@@ -47,5 +48,5 @@
     "lib/mathjax/extensions/MathEvents.js",
     "lib/images/MenuArrow-15.png"
    ],
-   "version": "0.4.2" // UPDATE VERSION NUMBER 
+   "version": "0.5.0"
 }

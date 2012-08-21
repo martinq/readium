@@ -15,8 +15,6 @@ Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
 		this.model.on("FXL_goToPage", this.spinePositionChangeHandler, this);
 		this.model.on("change:two_up", this.setUpMode, this);
 		this.model.on("change:meta_size", this.setContainerSize, this);
-
-		this.mediaOverlayController.on("change:current_mo_frag", this.currentMOFragChangeHandler, this);
 	},
 
 	render: function() {
@@ -69,7 +67,27 @@ Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
             return null;
         }
     },
-
+    
+    // override
+	indicateMoIsPlaying: function () {
+		var moHelper = new Readium.Models.MediaOverlayViewHelper({epubController : this.model});
+		moHelper.renderFixedMoPlaying(
+			this.pages.get("current_page"),
+			this.mediaOverlayController.get("active_mo"),
+			this
+        );
+	},
+    
+    // override
+	highlightText: function () {
+		var moHelper = new Readium.Models.MediaOverlayViewHelper({epubController : this.model});
+		moHelper.renderFixedLayoutMoFragHighlight(
+			this.pages.get("current_page"),
+			this.mediaOverlayController.get("mo_text_id"),
+			this
+        );
+	},
+    
 	// ------------------------------------------------------------------------------------ //
 	//  "PRIVATE" HELPERS                                                                   //
 	// ------------------------------------------------------------------------------------ //
@@ -84,9 +102,7 @@ Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
 
 		// remove any listeners registered on the model
 		this.model.off("change:two_up", this.setUpMode);
-		this.model.off("change:meta_size", this.setUpMode);
-
-		this.mediaOverlayController.off("change:current_mo_frag", this.currentMOFragChangeHandler, this);
+		this.model.off("change:meta_size", this.setUpMode);		
 	},
 
 	spinePositionChangeHandler: function () {
@@ -94,16 +110,6 @@ Readium.Views.FixedPaginationView = Readium.Views.PaginationViewBase.extend({
 		var pageNumber = this.model.get("spine_position") + 1;
 		this.pages.goToPage(pageNumber);
 	},
-
-	currentMOFragChangeHandler: function () {
-
-		var moHelper = new Readium.Models.MediaOverlayViewHelper({epubController : this.model});
-
-		moHelper.renderFixedLayoutMoFragHighlight(
-			this.pages.get("current_page"),
-			this.mediaOverlayController.get("current_mo_frag"),
-			this);
-	}, 
 
 	// Description: Creates/gets an iFrame which contains a page view to represent a spine item and appends it to an 
 	//   element that contains the content of the current ePub. Each of these spine item iframes is not necessarily displayed

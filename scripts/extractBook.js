@@ -170,7 +170,13 @@ Readium.Models.ZipBookExtractor = Readium.Models.BookExtractorBase.extend({
 		for (var i=0; i < this.zip.entries.length; i++) {
 			if(this.zip.entries[i].name === name) {
 				found = true;
-				this.zip.entries[i].extract(callback);
+				if(this.zip.entries[i].uncompressedSize > 0) {
+					this.zip.entries[i].extract(callback);	
+				}
+				else {
+					callback("");
+				}
+				
 				break;
 			}
 		}

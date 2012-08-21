@@ -13,6 +13,7 @@
 // REFACTORING CANDIDATE: hash_fragment now has two responsibilities with media overlays included in the source: To act as a broadcast
 //   attribute that triggers the view to go to a particular hash_fragment, as well as to do something for media overlays. It would
 //   probably make sense for the first reason to have a function make a direct call through the pagination strategy selector. 
+// Update (Marisa 20120814): right now it looks like hash_fragment is only monitored by the view, not MO.
 
 Readium.Models.EPUBController = Backbone.Model.extend({
 
@@ -26,6 +27,9 @@ Readium.Models.EPUBController = Backbone.Model.extend({
 		var that = this;
 
 		this.epub = this.get("epub");
+        
+        this.set("media_overlay_controller", 
+            new Readium.Models.MediaOverlayController({epubController : this}));
 
 		// create a [`Paginator`](/docs/paginator.html) object used to initialize
 		// pagination strategies for the spine items of this book
@@ -104,9 +108,7 @@ Readium.Models.EPUBController = Backbone.Model.extend({
     	"toc_visible": false,
     	"rendered_spine_items": [],
     	"current_theme": "default-theme",
-    	"current_margin": 3,
-    	"mo_processing": false,
-    	"mo_target": null
+    	"current_margin": 3
   	},
 
   	// Description: serialize this models state to `JSON` so that it can
@@ -115,11 +117,9 @@ Readium.Models.EPUBController = Backbone.Model.extend({
 
   		// only save attrs that should be persisted:
   		return {
-			"current_theme": this.get("current_theme"),
 			"updated_at": this.get("updated_at"),
 			"current_theme": this.get("current_theme"),
 			"current_margin": this.get("current_margin"),
-			"font_size": this.get("font_size"),
 			"two_up": this.get("two_up"),
 			"font_size": this.get("font_size"),
 			"key": this.get("key")
@@ -209,7 +209,7 @@ Readium.Models.EPUBController = Backbone.Model.extend({
 
 	restorePosition: function() {
 		var pos = Readium.Utils.getCookie(this.epub.get("key"));
-		return parseInt(pos, 10) || 0;
+		return parseInt(pos, 10) || this.packageDocument.getNextLinearSpinePostition();
 	},
 
 	savePosition: function() {
@@ -221,26 +221,34 @@ Readium.Models.EPUBController = Backbone.Model.extend({
 	},
 
 	hasNextSection: function() {
-		return this.get("spine_position") < (this.packageDocument.spineLength() - 1);
+		var start = this.get("spine_position");
+		return this.packageDocument.getPrevLinearSpinePostition(start) > -1;
 	},
 
 	hasPrevSection: function() {
-		return this.get("spine_position") > 0;
+		var start = this.get("spine_position");
+		return this.packageDocument.getNextLinearSpinePostition(start) > -1;
 	},
 	
+	// goes the next linear section in the spine. Non-linear sections should be
+	// skipped as per [the spec](http://idpf.org/epub/30/spec/epub30-publications.html#sec-itemref-elem)
 	goToNextSection: function() {
 
-		if (this.hasNextSection() ) {
-			var pos = this.get("spine_position");
-			this.setSpinePos(pos + 1, false);
+		var cp = this.get("spine_position");
+		var pos = this.packageDocument.getNextLinearSpinePostition(cp);
+		if(pos > -1) {
+			this.setSpinePos(pos, false);	
 		}
+		
 	},
 	
+	// goes the previous linear section in the spine. Non-linear sections should be
+	// skipped as per [the spec](http://idpf.org/epub/30/spec/epub30-publications.html#sec-itemref-elem)
 	goToPrevSection: function() {
-
-		if (this.hasPrevSection() ) {
-			var pos = this.get("spine_position");
-			this.setSpinePos(pos - 1, true);	
+		var cp = this.get("spine_position");
+		var pos = this.packageDocument.getPrevLinearSpinePostition(cp);
+		if(pos > -1) {
+			this.setSpinePos(pos, true);	
 		}
 	},
 

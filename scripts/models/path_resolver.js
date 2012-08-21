@@ -95,7 +95,6 @@ var fixXhtmlLinks = function(content, resolver) {
 						"/scripts/epub_reading_system.js' ></script>" + 
 						head_content;
 		head.innerHTML = head_content;
-		debugger;
 	}
 	return domToString(dom);
 	

@@ -29,9 +29,8 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 		this.model.on("change:two_up", this.setUpMode, this);
 		this.model.on("change:two_up", this.adjustIframeColumns, this);
 		this.model.on("change:current_margin", this.marginCallback, this);
-
-		this.mediaOverlayController.on("change:mo_playing", this.MOPlayingChangeHandler, this);
-		this.mediaOverlayController.on("change:current_mo_frag", this.currentMOFragChangeHandler, this);
+        this.model.on("change:hash_fragment", this.goToHashFragment, this);
+        
 	},
 
 	render: function(goToLastPage) {
@@ -68,21 +67,48 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
         var doc_right = doc_left + $(doc).width();
         var doc_bottom = doc_top + $(doc).height();
         
-        var visibleElms = elmsWithId.filter(function(idx) {
+        var visibleElms = this.filterElementsByPosition(elmsWithId, doc_top, doc_bottom, doc_left, doc_right);
+            
+        return visibleElms;
+    },
+    
+    // returns all the elements in the set that are inside the box
+    // separated this function from the one above in order to debug it
+    filterElementsByPosition: function(elements, documentTop, documentBottom, documentLeft, documentRight) {
+        var visibleElms = elements.filter(function(idx) {
             var elm_top = $(this).offset().top;
             var elm_left = $(this).offset().left;
             var elm_right = elm_left + $(this).width();
             var elm_bottom = elm_top + $(this).height();
             
-            var is_ok_x = elm_left >= doc_left && elm_right <= doc_right;
-            var is_ok_y = elm_top >= doc_top && elm_bottom <= doc_bottom;
+            var is_ok_x = elm_left >= documentLeft && elm_right <= documentRight;
+            var is_ok_y = elm_top >= documentTop && elm_bottom <= documentBottom;
             
             return is_ok_x && is_ok_y;
-        });
-
+        });  
         return visibleElms;
-        //this.model.set("visible_page_elements", visibleElms);
     },
+    
+    // override
+	indicateMoIsPlaying: function () {
+		var moHelper = new Readium.Models.MediaOverlayViewHelper({epubController : this.model});
+		moHelper.renderReflowableMoPlaying(
+			this.model.get("current_theme"),
+			this.mediaOverlayController.get("active_mo"),
+			this
+		);
+	},
+
+    // override
+	highlightText: function () {
+		var moHelper = new Readium.Models.MediaOverlayViewHelper({epubController : this.model});
+		moHelper.renderReflowableMoFragHighlight(
+			this.model.get("current_theme"),
+			this,
+			this.mediaOverlayController.get("mo_text_id")
+		);
+	},
+    
 
 	// ------------------------------------------------------------------------------------ //
 	//  "PRIVATE" HELPERS                                                                   //
@@ -100,25 +126,24 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 		this.model.off("change:two_up", this.setUpMode);
 		this.model.off("change:two_up", this.adjustIframeColumns);
 		this.model.off("change:current_margin", this.marginCallback);
-
-		this.mediaOverlayController.off("change:mo_playing", this.renderReflowableMoPlaying, this);
-		this.mediaOverlayController.off("change:current_mo_frag", this.renderReflowableMoFragHighlight, this);
-
 		// call the super destructor
 		Readium.Views.PaginationViewBase.prototype.destruct.call(this);
 	},
 
 	// REFACTORING CANDIDATE: I think this is actually part of the public interface
 	goToPage: function(page) {
+        // check to make sure we're not already on that page
+        if (this.model.get("current_page") != undefined && this.model.get("current_page").indexOf(page) != -1) {
+            return;
+        }
 		var offset = this.calcPageOffset(page).toString() + "px";
 		$(this.getBody()).css(this.offset_dir, "-" + offset);
 		this.showContent();
-
-		console.log("going to page " + page);
+        
         if (this.model.get("two_up") == false || 
             (this.model.get("two_up") && page % 2 === 1)) {
-                // when we change the page, we should tell MO to update its position
-                this.mediaOverlayController.pageChanged();
+                // when we change the page, we have to tell MO to update its position
+                this.mediaOverlayController.reflowPageChanged();
         }
 	},
 
@@ -135,7 +160,7 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 
 			if(!el) {
 				// couldn't find the el. just give up
-				return;
+                return;
 			}
 
 			// we get more precise results if we look at the first children
@@ -144,8 +169,8 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 			}
 
 			var page = this.getElemPageNumber(el);
-			if (page > 0) {
-				this.pages.goToPage(page);	
+            if (page > 0) {
+                this.pages.goToPage(page);	
 			}
 		}
 		// else false alarm no work to do
@@ -309,7 +334,7 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 		return num;
 	},
 
-	getElemPageNumber: function(elem) {
+    getElemPageNumber: function(elem) {
 		
 		var rects, shift;
 		rects = elem.getClientRects();
@@ -353,7 +378,7 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
     },
 
 	pageChangeHandler: function() {
-		var that = this;
+        var that = this;
 		this.hideContent();
 		setTimeout(function() {
 			that.goToPage(that.pages.get("current_page")[0]);
@@ -363,29 +388,7 @@ Readium.Views.ReflowablePaginationView = Readium.Views.PaginationViewBase.extend
 	windowSizeChangeHandler: function() {
 		this.adjustIframeColumns();
 	},
-
-	MOPlayingChangeHandler: function () {
-
-		var moHelper = new Readium.Models.MediaOverlayViewHelper({epubController : this.model});
-
-		moHelper.renderReflowableMoPlaying(
-			this.model.get("current_theme"),
-			this.mediaOverlayController.get("mo_playing"),
-			this
-			);
-	},
-
-	currentMOFragChangeHandler: function () {
-
-		var moHelper = new Readium.Models.MediaOverlayViewHelper({epubController : this.model});
-
-		moHelper.renderReflowableMoFragHighlight(
-			this.model.get("current_theme"),
-			this,
-			this.mediaOverlayController.get("current_mo_frag")
-			);
-	},
-
+    
 	marginCallback: function() {
 		this.adjustIframeColumns();
 	},

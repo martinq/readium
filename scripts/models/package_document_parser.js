@@ -79,11 +79,6 @@ Readium.Models.PackageDocumentParser.prototype.parse = function(xml_content) {
 	if(json.metadata.layout === "pre-paginated") {
 		json.metadata.fixed_layout = true;
 	}
-
-    // use a default value for media:active-class
-    if(json.metadata.active_class === "") {
-        json.metadata.active_class = "-epub-media-overlay-active";
-    }
     
     // parse the manifest into a proper collection
 	json.manifest = new Readium.Collections.ManifestItems(json.manifest, {packageDocument: this});
@@ -157,21 +152,12 @@ Readium.Models.PackageDocumentParser.prototype.parseSpineProperties = function(s
 		
 	}
 
-	spine = this.removeNonLinearSpineItems(spine);
-
 	for(var i = 0; i < spine.length; i++) {
 		var props = parseProperiesString(spine[i].properties);
 		// add all the properties to the spine item
 		_.extend(spine[i], props);
 	}
 	return spine;
-};
-
-// remove any non-linear items as per [the spec](http://idpf.org/epub/30/spec/epub30-publications.html#sec-itemref-elem)
-Readium.Models.PackageDocumentParser.prototype.parseSpineProperties = function(spine) {
-	return _.reject(spine, function(x) {
-		x.linear === "no";
-	})
 };
 
 // resolve the url of smils on any manifest items that have a MO
@@ -184,8 +170,9 @@ Readium.Models.PackageDocumentParser.prototype.resolveMediaOverlays = function(m
     manifest.forEach( function(item) {
 		if(item.get("media_type") === "application/smil+xml") {
             var url = that.resolveUri(item.get("href"));
-            var moObject = new Readium.Models.MediaOverlay({smil_url: url});
-            moObject.fetch(); // temp?
+            var moObject = new Readium.Models.MediaOverlay();
+            moObject.setUrl(url);
+            moObject.fetch(); 
             momap[item.id] = moObject;
         }
 	});

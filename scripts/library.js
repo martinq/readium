@@ -229,7 +229,7 @@ Readium.Views.FilePickerView = Backbone.View.extend({
 	},
 
 	resetForm: function() {
-
+		this.$('input').val("");
 	},
 
 	handleUrl: function(evt) {
@@ -266,12 +266,14 @@ Readium.Views.FilePickerView = Backbone.View.extend({
 		extractor.on("extraction_success", function() {
 			var book = extractor.packageDoc.toJSON();
 			that.collection.add(new Readium.Models.LibraryItem(book));
+			that.resetForm();
 			setTimeout(function() {
 				chrome.tabs.create({url: "/views/viewer.html?book=" + book.key });
 			}, 800);
 		});
+		extractor.on("change:failure", this.resetForm, this);
+		
 		extractor.extract();
-		this.resetForm();
 		this.hide();
 	}
 

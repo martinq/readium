@@ -2,6 +2,6 @@
 <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
 <app appid='gcoijjlhonnncebimjockhbjkohghegk'>
 	<!-- UPDATE VERSION NUMBER -->
-<updatecheck codebase='http://github.readium.org/releases/readium.crx' version='0.4.2' />
+<updatecheck codebase='http://github.readium.org/releases/readium.crx' version='0.5.0' />
 </app>
 </gupdate>

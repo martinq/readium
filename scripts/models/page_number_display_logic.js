@@ -279,5 +279,5 @@ Readium.Models.PageNumberDisplayLogic = Backbone.Model.extend({
 	displayedPageIsCenter: function (displayedPageNum) {
 
 		return $("#page-" + displayedPageNum).hasClass("center_page") ? true : false;
-	},
+	}
 });

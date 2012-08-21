@@ -98,7 +98,7 @@ Readium.Views.FixedLayoutBookZoomer = Backbone.View.extend({
 
 	bookHeight: function() {
 		return this.$("#page-wrap").height();
-	},	
+	}
 
 });
 
